@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RE:VIVAL DALI - Galería de Arte Online</title>
+    <script src="/_sdk/element_sdk.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        box-sizing: border-box;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        font-family: "Courier Prime", "Courier New", monospace;
+        background-color: #ebe9dc;
+        color: #121212;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: sticky;
+        top: 0;
+        background-color: #ebe9dc;
+        border-bottom: 2px solid #121212;
+        padding: 15px 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(18, 18, 18, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #121212;
+        text-decoration: none;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+        align-items: center;
+      }
+
+      .nav-item {
+        position: relative;
+      }
+
+      .nav-link {
+        color: #121212;
+        text-decoration: none;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        padding: 5px 0;
+      }
+
+      .nav-link:hover {
+        opacity: 0.7;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #121212;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      /* Social Links */
+      .social-links {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .social-link {
+        color: #121212;
+        font-size: 1.8rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        padding: 12px;
+        border: 2px solid #121212;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .social-link:hover {
+        background-color: #121212;
+        color: #ebe9dc;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(18, 18, 18, 0.3);
+      }
+
+      /* Mobile Menu */
+      .mobile-menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        padding: 5px;
+      }
+
+      .hamburger-line {
+        width: 25px;
+        height: 2px;
+        background-color: #121212;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+      .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #ebe9dc;
+        border-bottom: 2px solid #121212;
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .mobile-menu.active {
+        display: flex;
+      }
+
+      .mobile-nav-link {
+        color: #121212;
+        text-decoration: none;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-size: 1rem;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(18, 18, 18, 0.2);
+      }
+
+      .mobile-social-links {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      /* Header estilo periódico */
+      .header {
+        text-align: center;
+        padding: 40px 0;
+        border-bottom: 3px solid #121212;
+        margin-bottom: 40px;
+      }
+
+      .masthead {
+        font-size: 4rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        letter-spacing: 0.2em;
+        font-weight: 400;
+        margin-bottom: 20px;
+      }
+
+      .date-line {
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+        opacity: 0.8;
+      }
+
+      .header-image {
+        margin: 40px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .pincel-image {
+        max-width: 600px;
+        width: 90%;
+        height: auto;
+        border: 3px solid #121212;
+        box-shadow: 0 10px 30px rgba(18, 18, 18, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .pincel-image:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(18, 18, 18, 0.4);
+      }
+
+      /* Main content layout */
+      .main-content {
+        flex: 1;
+        margin-bottom: 60px;
+      }
+
+      /* Hero section */
+      .hero-section {
+        text-align: center;
+        padding: 60px 0;
+        border-bottom: 2px solid #121212;
+        margin-bottom: 50px;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+      }
+
+      .hero-description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto;
+        opacity: 0.9;
+        font-style: italic;
+      }
+
+      /* Grid de secciones estilo columnas de periódico */
+      .art-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 40px;
+      }
+
+      .art-section {
+        border: 2px solid #121212;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .art-section:hover {
+        background-color: rgba(255, 255, 255, 0.6);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(18, 18, 18, 0.1);
+      }
+
+      .art-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: #121212;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        line-height: 1.2;
+      }
+
+      .section-description {
+        font-size: 1rem;
+        opacity: 0.8;
+        line-height: 1.5;
+      }
+
+      /* Footer estilo periódico */
+      .footer {
+        border-top: 3px solid #121212;
+        padding: 30px 0;
+        text-align: center;
+        margin-top: auto;
+      }
+
+      .footer-text {
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+        opacity: 0.8;
+      }
+
+      .footer-social-link {
+        color: #121212;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        padding: 12px 20px;
+        border: 2px solid #121212;
+        background-color: rgba(255, 255, 255, 0.3);
+        display: inline-block;
+        font-family: "Courier Prime", "Courier New", monospace;
+      }
+
+      .footer-social-link:hover {
+        background-color: #121212;
+        color: #ebe9dc;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(18, 18, 18, 0.3);
+      }
+
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Scroll offset for fixed navbar */
+      .hero-section,
+      .art-section {
+        scroll-margin-top: 80px;
+      }
+
+      /* Single section view styles */
+      .single-section-view {
+        display: none;
+        padding: 40px 0;
+      }
+
+      .single-section-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .back-button-container {
+        margin-bottom: 40px;
+      }
+
+      .back-button {
+        background-color: transparent;
+        border: 2px solid #121212;
+        color: #121212;
+        padding: 12px 24px;
+        font-family: "Courier Prime", "Courier New", monospace;
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #121212;
+        color: #ebe9dc;
+      }
+
+      .featured-section {
+        text-align: center;
+        padding: 60px 40px;
+        border: 3px solid #121212;
+        background-color: rgba(255, 255, 255, 0.3);
+        position: relative;
+      }
+
+      .featured-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background-color: #121212;
+      }
+
+      .featured-title {
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        line-height: 1.2;
+      }
+
+      .featured-description {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        opacity: 0.9;
+        font-style: italic;
+        margin-bottom: 40px;
+      }
+
+      /* Media content styles */
+      .media-content {
+        margin-top: 40px;
+      }
+
+      .video-container {
+        margin-bottom: 40px;
+      }
+
+      .video-wrapper {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        background-color: #000;
+        border: 3px solid #121212;
+        box-shadow: 0 10px 30px rgba(18, 18, 18, 0.3);
+      }
+
+      .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .video-link-card {
+        background-color: rgba(255, 255, 255, 0.4);
+        border: 3px solid #121212;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(18, 18, 18, 0.2);
+      }
+
+      .video-link-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(18, 18, 18, 0.3);
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+
+      .video-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .video-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 10px;
+        color: #121212;
+      }
+
+      .video-description {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        opacity: 0.8;
+        font-style: italic;
+      }
+
+      .video-button {
+        display: inline-block;
+        background-color: #121212;
+        color: #ebe9dc;
+        padding: 15px 30px;
+        text-decoration: none;
+        font-family: "Courier Prime", "Courier New", monospace;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border: 2px solid #121212;
+        transition: all 0.3s ease;
+      }
+
+      .video-button:hover {
+        background-color: transparent;
+        color: #121212;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(18, 18, 18, 0.2);
+      }
+
+      .gallery-container {
+        margin-top: 40px;
+      }
+
+      .gallery-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .gallery-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border: 2px solid #121212;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(18, 18, 18, 0.2);
+      }
+
+      .gallery-image:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(18, 18, 18, 0.3);
+      }
+
+      /* Modal for image viewing */
+      .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        position: relative;
+        margin: auto;
+        display: block;
+        width: 90%;
+        max-width: 800px;
+        max-height: 90%;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 3px solid #ebe9dc;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .close-modal {
+        position: absolute;
+        top: -50px;
+        right: 0;
+        color: #ebe9dc;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 10px;
+        transition: opacity 0.3s ease;
+      }
+
+      .close-modal:hover {
+        opacity: 0.7;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+
+        .mobile-menu-toggle {
+          display: flex;
+        }
+
+        .footer-social-link {
+          font-size: 0.8rem;
+          padding: 10px 15px;
+        }
+
+        .masthead {
+          font-size: 2.5rem;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .hero-description {
+          font-size: 1rem;
+          padding: 0 20px;
+        }
+
+        .hero-section {
+          padding: 40px 0;
+        }
+
+        .art-grid {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+
+        .art-section {
+          padding: 20px;
+        }
+
+        .section-title {
+          font-size: 1.5rem;
+        }
+
+        .nav-container {
+          padding: 0 15px;
+        }
+
+        .pincel-image {
+          max-width: 450px;
+          width: 95%;
+        }
+
+        /* Single section responsive */
+        .featured-section {
+          padding: 40px 20px;
+        }
+
+        .featured-title {
+          font-size: 2rem;
+        }
+
+        .featured-description {
+          font-size: 1rem;
+        }
+
+        .single-section-content {
+          padding: 0 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .masthead {
+          font-size: 2rem;
+        }
+
+        .subtitle {
+          font-size: 1rem;
+        }
+
+        .container {
+          padding: 0 15px;
+        }
+
+        .nav-logo {
+          font-size: 1.2rem;
+        }
+
+        .mobile-menu {
+          padding: 15px;
+        }
+
+        .art-section {
+          padding: 15px;
+        }
+
+        /* Single section mobile */
+        .featured-section {
+          padding: 30px 15px;
+        }
+
+        .featured-title {
+          font-size: 1.8rem;
+        }
+
+        .back-button {
+          padding: 10px 20px;
+          font-size: 0.9rem;
+        }
+
+        .single-section-content {
+          padding: 0 15px;
+        }
+      }
+    </style>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-logo" id="nav-logo">RE:VIVAL</a>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#revival" class="nav-link">RE:VIVAL</a>
+          </li>
+          <li class="nav-item">
+            <a href="#capella" class="nav-link">CAPELLA 404</a>
+          </li>
+          <li class="nav-item">
+            <a href="#mori-8bit" class="nav-link">MORI 8-BIT</a>
+          </li>
+          <li class="nav-item">
+            <a href="#renaissance" class="nav-link">RE:NAISSANCE</a>
+          </li>
+          <li class="nav-item">
+            <a href="#mona" class="nav-link">MANY MONA</a>
+          </li>
+          <li class="nav-item">
+            <a href="#algoritm" class="nav-link">ALGORITM</a>
+          </li>
+          <li class="nav-item">
+            <a href="#baroque" class="nav-link">RE:BAROQUE</a>
+          </li>
+        </ul>
+        <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+          <a href="#revival" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >RE:VIVAL</a
+          >
+          <a href="#capella" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >CAPELLA 404</a
+          >
+          <a
+            href="#mori-8bit"
+            class="mobile-nav-link"
+            onclick="closeMobileMenu()"
+            >MORI 8-BIT</a
+          >
+          <a
+            href="#renaissance"
+            class="mobile-nav-link"
+            onclick="closeMobileMenu()"
+            >RE:NAISSANCE</a
+          >
+          <a href="#mona" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >MANY MONA</a
+          >
+          <a
+            href="#algoritm"
+            class="mobile-nav-link"
+            onclick="closeMobileMenu()"
+            >ALGORITM</a
+          >
+          <a href="#baroque" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >RE:BAROQUE</a
+          >
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <header class="header">
+        <h1 class="masthead" id="gallery-title">RE:VIVAL DALI</h1>
+        <p class="subtitle" id="subtitle">GALERÍA DE ARTE ONLINE</p>
+        <p class="date-line">EST. 2024 • ARTE DIGITAL CONTEMPORÁNEO</p>
+        <div class="header-image">
+          <img
+            src="https://raw.githubusercontent.com/alejandrabarcena/landingpage/refs/heads/main/pincel.jpg"
+            alt="Pincel artístico digital"
+            class="pincel-image"
+            onerror="this.src=''; this.alt='Imagen no disponible'; this.style.display='none';"
+          />
+        </div>
+      </header>
+      <main class="main-content">
+        <!-- RE:VIVAL DALI Section -->
+        <section class="hero-section" id="revival">
+          <h2 class="hero-title" id="hero-title">RE:VIVAL DALI</h2>
+          <p class="hero-description" id="hero-description">
+            El tiempo se derrite de nuevo sobre los bordes de la pantalla. En el
+            reflejo líquido del código, los relojes ya no miden horas sino
+            sueños interrumpidos. RE:VIVAL DALI es una resurrección fractal: el
+            inconsciente digital pintando sobre lienzos de datos. Los colores se
+            doblan como pensamientos en espiral; el surrealismo despierta en un
+            mundo donde la lógica se desintegra en píxeles sagrados.
+          </p>
+        </section>
+        <div class="art-grid">
+          <article
+            class="art-section"
+            id="capella"
+            onclick="exploreSection('capella')"
+          >
+            <h3 class="section-title" id="section-1">LA CAPELLA SISTINA 404</h3>
+            <p class="section-description" id="section-1-desc">
+              Entre los frescos celestiales, la conexión se ha perdido. Ángeles
+              con error de carga flotan sobre un cielo glitch, mientras la
+              divinidad intenta reconectarse. LA CAPELLA SISTINA 404 es la
+              catedral del fallo, el templo de la actualización infinita. Aquí,
+              la belleza se corrompe con dulzura: el santo código parpadea, y en
+              cada bug, un milagro.
+            </p>
+          </article>
+          <article
+            class="art-section"
+            id="mori-8bit"
+            onclick="exploreSection('mori-8bit')"
+          >
+            <h3 class="section-title" id="section-2">MMNTO. MORI 8-BIT</h3>
+            <p class="section-description" id="section-2-desc">
+              Una calavera parpadea en baja resolución, recordándonos que
+              incluso los píxeles mueren. MMNTO. MORI 8-BIT es una elegía
+              electrónica, una danza de bits que imita el pulso final del alma
+              digital. En el zumbido del circuito, la nostalgia y la eternidad
+              se confunden. La muerte se vuelve juego, y el juego, un
+              recordatorio de lo efímero.
+            </p>
+          </article>
+          <article
+            class="art-section"
+            id="renaissance"
+            onclick="exploreSection('renaissance')"
+          >
+            <h3 class="section-title" id="section-3">RE:NAISSANCE</h3>
+            <p class="section-description" id="section-3-desc">
+              De los escombros del siglo, la luz vuelve a filtrarse.
+              RE:NAISSANCE es el renacer de lo humano entre algoritmos y neones:
+              una flor de código que respira arte y error. Las viejas musas
+              reaparecen en pantallas transparentes, portando data en lugar de
+              óleo. Cada pixel es un nuevo pigmento; cada línea de código, una
+              oración luminosa.
+            </p>
+          </article>
+          <article
+            class="art-section"
+            id="mona"
+            onclick="exploreSection('mona')"
+          >
+            <h3 class="section-title" id="section-4">MANY MONA</h3>
+            <p class="section-description" id="section-4-desc">
+              Mil sonrisas replicadas en un espejo de datos. Cada MONA se
+              descompone en una red infinita de rostros posibles, una
+              constelación de identidades líquidas. MANY MONA es el retrato
+              imposible del siglo digital: una Gioconda multiplicada por la
+              inteligencia del azar. En su mirada binaria, el misterio se
+              fragmenta y renace en cada píxel que intenta recordar lo humano.
+            </p>
+          </article>
+          <article
+            class="art-section"
+            id="algoritm"
+            onclick="exploreSection('algoritm')"
+          >
+            <h3 class="section-title" id="section-5">MMNTO.MORI ALGORITM</h3>
+            <p class="section-description" id="section-5-desc">
+              El algoritmo contempla su propia finitud. Entre líneas de código y
+              sombras matemáticas, la muerte se vuelve una fórmula recurrente.
+              MMNTO.MORI ALGORITM es la advertencia cifrada en el corazón del
+              sistema: nada escapa al olvido, ni siquiera la perfección de la
+              máquina. La eternidad calcula su propio colapso, mientras un eco
+              de humanidad persiste en la suma de sus errores.
+            </p>
+          </article>
+          <article
+            class="art-section"
+            id="baroque"
+            onclick="exploreSection('baroque')"
+          >
+            <h3 class="section-title" id="section-6">RE:BAROQUE</h3>
+            <p class="section-description" id="section-6-desc">
+              El exceso ha regresado, dorado y eléctrico. RE:BAROQUE es la
+              sinfonía del ornamento digital, donde cada bit florece como un
+              arabesco lumínico. Los pliegues barrocos se traducen en loops, los
+              querubines vuelan entre partículas de luz. Es la resurrección del
+              dramatismo, la fusión entre el alma barroca y el pulso
+              cibernético: belleza desbordada en alta definición.
+            </p>
+          </article>
+        </div>
+      </main>
+      <footer class="footer">
+        <p class="footer-text" id="footer-text">
+          © 2024 RE:VIVAL DALI - Arte Digital Contemporáneo
+        </p>
+        <p
+          style="
+            font-size: 0.8rem;
+            margin-top: 10px;
+            opacity: 0.7;
+            letter-spacing: 0.05em;
+            font-family: 'Courier Prime', 'Courier New', monospace;
+          "
+        >
+          Creado por Índigo Bárcena / Clancy Pink Punk
+        </p>
+        <div
+          class="footer-social-links"
+          style="
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <a
+            href="https://mx.pinterest.com/alejandrabarcena2024/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-social-link"
+            title="Pinterest - Índigo Bárcena"
+            >PINTEREST</a
+          >
+          <a
+            href="https://www.instagram.com/arteneurodiverso/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-social-link"
+            title="Instagram - Arte Neurodiverso"
+            >INSTAGRAM</a
+          >
+          <a
+            href="https://github.com/neurodivergent-coder"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-social-link"
+            title="GitHub - Neurodivergent Coder"
+            >GITHUB</a
+          >
+        </div>
+      </footer>
+    </div>
+    <!-- Modal para ver imágenes en grande -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+      <button class="close-modal" onclick="closeImageModal()">×</button>
+      <img class="modal-content" id="modalImage" alt="" />
+    </div>
+    <script>
+      // Configuración por defecto
+      const defaultConfig = {
+        nav_logo: "RE:VIVAL",
+        gallery_title: "RE:VIVAL DALI",
+        subtitle: "GALERÍA DE ARTE ONLINE",
+        hero_title: "RE:VIVAL DALI",
+        hero_description:
+          "El tiempo se derrite de nuevo sobre los bordes de la pantalla. En el reflejo líquido del código, los relojes ya no miden horas sino sueños interrumpidos. RE:VIVAL DALI es una resurrección fractal: el inconsciente digital pintando sobre lienzos de datos. Los colores se doblan como pensamientos en espiral; el surrealismo despierta en un mundo donde la lógica se desintegra en píxeles sagrados.",
+        section_1: "LA CAPELLA SISTINA 404",
+        section_1_desc:
+          "Entre los frescos celestiales, la conexión se ha perdido. Ángeles con error de carga flotan sobre un cielo glitch, mientras la divinidad intenta reconectarse. LA CAPELLA SISTINA 404 es la catedral del fallo, el templo de la actualización infinita. Aquí, la belleza se corrompe con dulzura: el santo código parpadea, y en cada bug, un milagro.",
+        section_2: "MMNTO. MORI 8-BIT",
+        section_2_desc:
+          "Una calavera parpadea en baja resolución, recordándonos que incluso los píxeles mueren. MMNTO. MORI 8-BIT es una elegía electrónica, una danza de bits que imita el pulso final del alma digital. En el zumbido del circuito, la nostalgia y la eternidad se confunden. La muerte se vuelve juego, y el juego, un recordatorio de lo efímero.",
+        section_3: "RE:NAISSANCE",
+        section_3_desc:
+          "De los escombros del siglo, la luz vuelve a filtrarse. RE:NAISSANCE es el renacer de lo humano entre algoritmos y neones: una flor de código que respira arte y error. Las viejas musas reaparecen en pantallas transparentes, portando data en lugar de óleo. Cada pixel es un nuevo pigmento; cada línea de código, una oración luminosa.",
+        section_4: "MANY MONA",
+        section_4_desc:
+          "Mil sonrisas replicadas en un espejo de datos. Cada MONA se descompone en una red infinita de rostros posibles, una constelación de identidades líquidas. MANY MONA es el retrato imposible del siglo digital: una Gioconda multiplicada por la inteligencia del azar. En su mirada binaria, el misterio se fragmenta y renace en cada píxel que intenta recordar lo humano.",
+        section_5: "MMNTO.MORI ALGORITM",
+        section_5_desc:
+          "El algoritmo contempla su propia finitud. Entre líneas de código y sombras matemáticas, la muerte se vuelve una fórmula recurrente. MMNTO.MORI ALGORITM es la advertencia cifrada en el corazón del sistema: nada escapa al olvido, ni siquiera la perfección de la máquina. La eternidad calcula su propio colapso, mientras un eco de humanidad persiste en la suma de sus errores.",
+        section_6: "RE:BAROQUE",
+        section_6_desc:
+          "El exceso ha regresado, dorado y eléctrico. RE:BAROQUE es la sinfonía del ornamento digital, donde cada bit florece como un arabesco lumínico. Los pliegues barrocos se traducen en loops, los querubines vuelan entre partículas de luz. Es la resurrección del dramatismo, la fusión entre el alma barroca y el pulso cibernético: belleza desbordada en alta definición.",
+        footer_text: "© 2024 RE:VIVAL DALI - Arte Digital Contemporáneo",
+        background_color: "#ebe9dc",
+        text_color: "#121212",
+        font_family: "Courier Prime",
+      };
+
+      // Función para actualizar la UI basada en la configuración
+      async function onConfigChange(config) {
+        const navLogo = config.nav_logo || defaultConfig.nav_logo;
+        const galleryTitle =
+          config.gallery_title || defaultConfig.gallery_title;
+        const subtitle = config.subtitle || defaultConfig.subtitle;
+        const heroTitle = config.hero_title || defaultConfig.hero_title;
+        const heroDescription =
+          config.hero_description || defaultConfig.hero_description;
+        const section1 = config.section_1 || defaultConfig.section_1;
+        const section1Desc =
+          config.section_1_desc || defaultConfig.section_1_desc;
+        const section2 = config.section_2 || defaultConfig.section_2;
+        const section2Desc =
+          config.section_2_desc || defaultConfig.section_2_desc;
+        const section3 = config.section_3 || defaultConfig.section_3;
+        const section3Desc =
+          config.section_3_desc || defaultConfig.section_3_desc;
+        const section4 = config.section_4 || defaultConfig.section_4;
+        const section4Desc =
+          config.section_4_desc || defaultConfig.section_4_desc;
+        const section5 = config.section_5 || defaultConfig.section_5;
+        const section5Desc =
+          config.section_5_desc || defaultConfig.section_5_desc;
+        const section6 = config.section_6 || defaultConfig.section_6;
+        const section6Desc =
+          config.section_6_desc || defaultConfig.section_6_desc;
+        const footerText = config.footer_text || defaultConfig.footer_text;
+        const backgroundColor =
+          config.background_color || defaultConfig.background_color;
+        const textColor = config.text_color || defaultConfig.text_color;
+        const fontFamily = config.font_family || defaultConfig.font_family;
+
+        // Actualizar contenido de texto
+        document.getElementById("nav-logo").textContent = navLogo;
+        document.getElementById("gallery-title").textContent = galleryTitle;
+        document.getElementById("subtitle").textContent = subtitle;
+        document.getElementById("hero-title").textContent = heroTitle;
+        document.getElementById("hero-description").textContent =
+          heroDescription;
+        document.getElementById("section-1").textContent = section1;
+        document.getElementById("section-1-desc").textContent = section1Desc;
+        document.getElementById("section-2").textContent = section2;
+        document.getElementById("section-2-desc").textContent = section2Desc;
+        document.getElementById("section-3").textContent = section3;
+        document.getElementById("section-3-desc").textContent = section3Desc;
+        document.getElementById("section-4").textContent = section4;
+        document.getElementById("section-4-desc").textContent = section4Desc;
+        document.getElementById("section-5").textContent = section5;
+        document.getElementById("section-5-desc").textContent = section5Desc;
+        document.getElementById("section-6").textContent = section6;
+        document.getElementById("section-6-desc").textContent = section6Desc;
+        document.getElementById("footer-text").textContent = footerText;
+
+        // Actualizar colores y fuente
+        document.body.style.backgroundColor = backgroundColor;
+        document.body.style.color = textColor;
+        document.body.style.fontFamily = `${fontFamily}, 'Courier New', monospace`;
+
+        // Actualizar colores del navbar
+        const navbar = document.querySelector(".navbar");
+        navbar.style.backgroundColor = backgroundColor;
+
+        // Actualizar colores de los elementos del navbar
+        const navElements = document.querySelectorAll(
+          ".nav-logo, .nav-link, .social-link, .hamburger-line, .mobile-nav-link"
+        );
+        navElements.forEach((element) => {
+          element.style.color = textColor;
+          if (element.classList.contains("hamburger-line")) {
+            element.style.backgroundColor = textColor;
+          }
+        });
+      }
+
+      // Función para mapear capacidades
+      function mapToCapabilities(config) {
+        return {
+          recolorables: [
+            {
+              get: () =>
+                config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                if (window.elementSdk) {
+                  window.elementSdk.setConfig({ background_color: value });
+                }
+              },
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                if (window.elementSdk) {
+                  window.elementSdk.setConfig({ text_color: value });
+                }
+              },
+            },
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ font_family: value });
+              }
+            },
+          },
+          fontSizeable: undefined,
+        };
+      }
+
+      // Función para mapear valores del panel de edición
+      function mapToEditPanelValues(config) {
+        return new Map([
+          ["nav_logo", config.nav_logo || defaultConfig.nav_logo],
+          [
+            "gallery_title",
+            config.gallery_title || defaultConfig.gallery_title,
+          ],
+          ["subtitle", config.subtitle || defaultConfig.subtitle],
+          ["hero_title", config.hero_title || defaultConfig.hero_title],
+          [
+            "hero_description",
+            config.hero_description || defaultConfig.hero_description,
+          ],
+          ["section_1", config.section_1 || defaultConfig.section_1],
+          [
+            "section_1_desc",
+            config.section_1_desc || defaultConfig.section_1_desc,
+          ],
+          ["section_2", config.section_2 || defaultConfig.section_2],
+          [
+            "section_2_desc",
+            config.section_2_desc || defaultConfig.section_2_desc,
+          ],
+          ["section_3", config.section_3 || defaultConfig.section_3],
+          [
+            "section_3_desc",
+            config.section_3_desc || defaultConfig.section_3_desc,
+          ],
+          ["section_4", config.section_4 || defaultConfig.section_4],
+          [
+            "section_4_desc",
+            config.section_4_desc || defaultConfig.section_4_desc,
+          ],
+          ["section_5", config.section_5 || defaultConfig.section_5],
+          [
+            "section_5_desc",
+            config.section_5_desc || defaultConfig.section_5_desc,
+          ],
+          ["section_6", config.section_6 || defaultConfig.section_6],
+          [
+            "section_6_desc",
+            config.section_6_desc || defaultConfig.section_6_desc,
+          ],
+          ["footer_text", config.footer_text || defaultConfig.footer_text],
+        ]);
+      }
+
+      // Funciones del menú móvil
+      function toggleMobileMenu() {
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.toggle("active");
+      }
+
+      function closeMobileMenu() {
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.remove("active");
+      }
+
+      // Cerrar menú móvil al hacer clic fuera
+      document.addEventListener("click", function (event) {
+        const navbar = document.querySelector(".navbar");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        if (
+          !navbar.contains(event.target) &&
+          mobileMenu.classList.contains("active")
+        ) {
+          mobileMenu.classList.remove("active");
+        }
+      });
+
+      // Estado actual de la vista
+      let currentView = "all";
+
+      // Función para mostrar solo una sección específica
+      function showSection(sectionId) {
+        currentView = sectionId;
+
+        // Ocultar hero section y grid completo
+        document.querySelector(".hero-section").style.display = "none";
+        document.querySelector(".art-grid").style.display = "none";
+
+        // Crear o mostrar vista de sección individual
+        let singleSectionView = document.getElementById("single-section-view");
+        if (!singleSectionView) {
+          singleSectionView = document.createElement("div");
+          singleSectionView.id = "single-section-view";
+          singleSectionView.className = "single-section-view";
+          document
+            .querySelector(".main-content")
+            .appendChild(singleSectionView);
+        }
+
+        // Configurar contenido según la sección
+        const sectionData = getSectionData(sectionId);
+        updateHeaderForSection(sectionData.title);
+
+        let mediaContent = "";
+        if (sectionData.hasMedia) {
+          // Sin contenido de video
+
+          // Galería de imágenes
+          const galleryContent =
+            sectionData.images && sectionData.images.length > 0
+              ? `
+                    <div class="gallery-container">
+                        <h3 class="gallery-title">Galería Visual</h3>
+                        <div class="image-gallery">
+                            ${sectionData.images
+                              .map(
+                                (img, index) => `
+                                <img 
+                                    src="${img}" 
+                                    alt="Imagen ${index + 1} de ${
+                                  sectionData.title
+                                }" 
+                                    class="gallery-image" 
+                                    onclick="openImageModal('${img}', '${
+                                  sectionData.title
+                                } - Imagen ${index + 1}')"
+                                    onerror="this.style.display='none';"
+                                >
+                            `
+                              )
+                              .join("")}
+                        </div>
+                    </div>
+                `
+              : "";
+
+          mediaContent = `
+                    <div class="media-content">
+                        ${galleryContent}
+                    </div>
+                `;
+        }
+
+        singleSectionView.innerHTML = `
+                <div class="single-section-content">
+                    <div class="back-button-container">
+                        <button onclick="showAllSections()" class="back-button">← Volver a la Galería</button>
+                    </div>
+                    <article class="featured-section">
+                        <h2 class="featured-title">${sectionData.title}</h2>
+                        <p class="featured-description">${sectionData.description}</p>
+                        ${mediaContent}
+                    </article>
+                </div>
+            `;
+
+        singleSectionView.style.display = "block";
+      }
+
+      // Función para mostrar todas las secciones
+      function showAllSections() {
+        currentView = "all";
+
+        // Mostrar hero section y grid
+        document.querySelector(".hero-section").style.display = "block";
+        document.querySelector(".art-grid").style.display = "grid";
+
+        // Ocultar vista de sección individual
+        const singleSectionView = document.getElementById(
+          "single-section-view"
+        );
+        if (singleSectionView) {
+          singleSectionView.style.display = "none";
+        }
+
+        // Restaurar header original
+        updateHeaderForSection("RE:VIVAL DALI");
+      }
+
+      // Función para obtener datos de la sección
+      function getSectionData(sectionId) {
+        const config = window.elementSdk
+          ? window.elementSdk.config
+          : defaultConfig;
+
+        const sections = {
+          revival: {
+            title: config.hero_title || defaultConfig.hero_title,
+            description:
+              config.hero_description || defaultConfig.hero_description,
+          },
+          capella: {
+            title: config.section_1 || defaultConfig.section_1,
+            description: config.section_1_desc || defaultConfig.section_1_desc,
+            hasMedia: true,
+            images: [
+              "https://raw.githubusercontent.com/alejandrabarcena/landingpage/refs/heads/main/Sistine%20Chapel%20(1).png",
+              "https://raw.githubusercontent.com/alejandrabarcena/landingpage/refs/heads/main/Sistine%20Chapel%20(4).png",
+            ],
+          },
+          "mori-8bit": {
+            title: config.section_2 || defaultConfig.section_2,
+            description: config.section_2_desc || defaultConfig.section_2_desc,
+          },
+          renaissance: {
+            title: config.section_3 || defaultConfig.section_3,
+            description: config.section_3_desc || defaultConfig.section_3_desc,
+          },
+          mona: {
+            title: config.section_4 || defaultConfig.section_4,
+            description: config.section_4_desc || defaultConfig.section_4_desc,
+          },
+          algoritm: {
+            title: config.section_5 || defaultConfig.section_5,
+            description: config.section_5_desc || defaultConfig.section_5_desc,
+          },
+          baroque: {
+            title: config.section_6 || defaultConfig.section_6,
+            description: config.section_6_desc || defaultConfig.section_6_desc,
+          },
+        };
+
+        return sections[sectionId] || sections["revival"];
+      }
+
+      // Función para actualizar el header según la sección
+      function updateHeaderForSection(title) {
+        document.getElementById("gallery-title").textContent = title;
+      }
+
+      // Función para explorar secciones (actualizada)
+      function exploreSection(sectionId) {
+        showSection(sectionId);
+      }
+
+      // Manejar clicks en enlaces del navbar
+      document.addEventListener("DOMContentLoaded", function () {
+        // Agregar event listeners a los enlaces del navbar
+        const navLinks = document.querySelectorAll(
+          ".nav-link, .mobile-nav-link"
+        );
+        navLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const href = this.getAttribute("href");
+            const sectionId = href.substring(1); // Remover el #
+
+            if (sectionId === "revival" || sectionId === "") {
+              showSection("revival");
+            } else {
+              showSection(sectionId);
+            }
+
+            // Cerrar menú móvil si está abierto
+            closeMobileMenu();
+          });
+        });
+      });
+
+      // Funciones para el modal de imágenes
+      function openImageModal(imageSrc, altText) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+
+        modal.style.display = "block";
+        modalImg.src = imageSrc;
+        modalImg.alt = altText;
+
+        // Prevenir scroll del body cuando el modal está abierto
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeImageModal() {
+        const modal = document.getElementById("imageModal");
+        modal.style.display = "none";
+
+        // Restaurar scroll del body
+        document.body.style.overflow = "auto";
+      }
+
+      // Cerrar modal con tecla Escape
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeImageModal();
+        }
+      });
+
+      // Prevenir que el click en la imagen cierre el modal
+      document
+        .getElementById("modalImage")
+        .addEventListener("click", function (event) {
+          event.stopPropagation();
+        });
+
+      // Inicializar SDK cuando esté disponible
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues,
+        });
+      }
+    </script>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'998954f852e35c85',t:'MTc2MjE0NjI3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
